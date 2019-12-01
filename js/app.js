@@ -91,9 +91,30 @@ function create_snake() {
   });
 }
 
-function move_right() {
+function move(direction) {
   let current_head = snake_locations.head();
-  current_head[0] += snake_side;
+
+  switch (direction) {
+    case "left":
+      current_head[0] -= snake_side;
+      break;
+    case "right":
+      current_head[0] += snake_side;
+      break;
+    case "up":
+      current_head[1] += snake_side;
+      break;
+    case "down":
+      current_head[1] -= snake_side;
+      break;
+    case "in":
+      current_head[2] -= snake_side;
+      break;
+    case "out":
+      current_head[2] += snake_side;
+      break;
+  }
+
   snake_locations.enqueue(current_head);
   snake_locations.dequeue();
   create_snake();
@@ -122,7 +143,29 @@ animate();
 
 function move_snake() {
   setTimeout(function() {
-    move_right();
+    // Move randomly
+
+    const random = Math.floor(Math.random() * 6) + 1;
+    switch (random) {
+      case 1:
+        move("left");
+        break;
+      case 2:
+        move("right");
+        break;
+      case 3:
+        move("up");
+        break;
+      case 4:
+        move("down");
+        break;
+      case 5:
+        move("in");
+        break;
+      case 6:
+        move("out");
+        break;
+    }
 
     move_snake();
   }, speed);
