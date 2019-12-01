@@ -5,6 +5,11 @@
 const side = 3;
 // size of snake cube
 const snake_side = side / 20;
+// Speed of snake (in milliseconds)
+const speed = 100;
+
+const snake_locations = new Queue();
+const snake_blocks = [];
 
 /**
  * Page setup
@@ -28,41 +33,6 @@ camera.position.set(0, 0, 7);
 controls.autoRotate = true;
 controls.autoRotateSpeed = 1;
 controls.update();
-
-class Queue {
-  constructor() {
-    this.items = [];
-  }
-
-  enqueue(element) {
-    this.items.push(element);
-  }
-
-  dequeue() {
-    if (this.isEmpty()) {
-      return "Underflow";
-    }
-    return this.items.shift();
-  }
-
-  front() {
-    if (this.isEmpty()) {
-      return "No element in Queue";
-    }
-    return this.items[0];
-  }
-
-  isEmpty() {
-    // return true if the queue is empty.
-    return this.items.length == 0;
-  }
-
-  printQueue() {
-    var str = "";
-    for (var i = 0; i < this.items.length; i++) str += this.items[i] + " ";
-    return str;
-  }
-}
 
 /**
  * Generates cube container
@@ -101,15 +71,41 @@ function change_food_location(food) {
   food.position.set(rand_x, rand_y, rand_z);
 }
 
-function move_forword() {}
+function clear_snake_blocks() {
+  snake_blocks.forEach(function(block) {
+    scene.remove(block);
+  });
+}
+
+function create_snake() {
+  clear_snake_blocks();
+
+  const locations = snake_locations.getList();
+
+  locations.forEach(function(location) {
+    // Create cube at this location
+    const snake_cube = create_snake_block(snake_side);
+    snake_cube.position.set(location[0], location[1], location[2]);
+    scene.add(snake_cube);
+    snake_blocks.push(snake_cube);
+  });
+}
+
+function move_right() {
+  let current_head = snake_locations.head();
+  current_head[0] += snake_side;
+  snake_locations.enqueue(current_head);
+  snake_locations.dequeue();
+  create_snake();
+}
 
 // Create the big cube container
 let cube = create_cube(side);
 scene.add(cube);
 
 // Set snake
-let snake = create_snake_block(snake_side);
-scene.add(snake);
+snake_locations.enqueue([0, 0, 0]);
+create_snake();
 
 // Create food
 let food = new_food(snake_side / 2);
@@ -123,6 +119,16 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+function move_snake() {
+  setTimeout(function() {
+    move_right();
+
+    move_snake();
+  }, speed);
+}
+
+move_snake();
 
 function on_window_resize() {
   camera.aspect = window.innerWidth / window.innerHeight;
