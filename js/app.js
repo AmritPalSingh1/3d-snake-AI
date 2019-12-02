@@ -2,7 +2,7 @@
  * Set global variables
  */
 //  size of cube
-const side = 3;
+const side = 3.4;
 // size of snake cube
 const snake_side = side / 30;
 // Speed of snake (in milliseconds)
@@ -27,6 +27,7 @@ camera.position.z = 5;
 
 var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x1d1d1d, 1);
 document.body.appendChild(renderer.domElement);
 
 // Orbit camera around center
@@ -70,7 +71,7 @@ function body_collisions() {}
 // Generates snake block
 function create_snake_block(side) {
   let geometry = new THREE.BoxGeometry(side, side, side);
-  var material = new THREE.MeshBasicMaterial({ color: 0x8bf0ba });
+  var material = new THREE.MeshBasicMaterial({ color: 0x1cf2b4 });
   let head = new THREE.Mesh(geometry, material);
   return head;
 }
@@ -78,7 +79,7 @@ function create_snake_block(side) {
 // Generates food sphere
 function new_food(radius) {
   let geometry = new THREE.SphereGeometry(radius);
-  var material = new THREE.MeshBasicMaterial({ color: 0x2fddf4 });
+  var material = new THREE.MeshBasicMaterial({ color: 0xff214f });
   let shpere = new THREE.Mesh(geometry, material);
   return shpere;
 }
