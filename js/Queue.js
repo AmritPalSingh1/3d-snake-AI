@@ -25,7 +25,7 @@ class Queue {
     if (this.isEmpty()) {
       return "No element in Queue";
     }
-    return this.items[this.items.length - 1];
+    return this.items[this.items.length - 1].slice();
   }
 
   getList() {
@@ -41,5 +41,9 @@ class Queue {
     var str = "";
     for (var i = 0; i < this.items.length; i++) str += this.items[i] + " ";
     return str;
+  }
+
+  clear() {
+    this.items = [];
   }
 }
