@@ -4,9 +4,9 @@
 //  size of cube
 const side = 3;
 // size of snake cube
-const snake_side = side / 10;
+const snake_side = side / 30;
 // Speed of snake (in milliseconds)
-const speed = 500;
+const speed = 50;
 
 const snake_locations = new Queue();
 let snake_blocks = [];
@@ -236,26 +236,22 @@ function move_snake() {
   setTimeout(function() {
     // Move randomly
 
-    const random = Math.floor(Math.random() * 6) + 1;
-    switch (random) {
-      case 1:
-        move("left");
-        break;
-      case 2:
-        move("right");
-        break;
-      case 3:
-        move("up");
-        break;
-      case 4:
-        move("down");
-        break;
-      case 5:
-        move("in");
-        break;
-      case 6:
-        move("out");
-        break;
+    // Get food location
+    let head = snake_locations.head();
+
+    console.log(food_location + " , " + head);
+    if (food_location[0] - head[0] > snake_side / 2) {
+      move("right");
+    } else if (food_location[1] - head[1] >= snake_side / 2) {
+      move("up");
+    } else if (food_location[2] - head[2] >= snake_side / 2) {
+      move("out");
+    } else if (head[0] - food_location[0] >= snake_side / 2) {
+      move("left");
+    } else if (head[1] - food_location[1] >= snake_side / 2) {
+      move("down");
+    } else if (head[2] - food_location[2] >= snake_side / 2) {
+      move("in");
     }
 
     if (!is_head_in()) {
