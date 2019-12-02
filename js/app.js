@@ -64,6 +64,8 @@ function snake_food_collision(cube_center, sphere_center) {
   }
 }
 
+function body_collisions() {}
+
 // Generates snake block
 function create_snake_block(side) {
   let geometry = new THREE.BoxGeometry(side, side, side);
@@ -230,8 +232,6 @@ function animate() {
 }
 animate();
 
-function check_collisions() {}
-
 function move_snake() {
   setTimeout(function() {
     // Move randomly
@@ -239,7 +239,6 @@ function move_snake() {
     // Get food location
     let head = snake_locations.head();
 
-    console.log(food_location + " , " + head);
     if (food_location[0] - head[0] > snake_side / 2) {
       move("right");
     } else if (food_location[1] - head[1] >= snake_side / 2) {
@@ -254,7 +253,7 @@ function move_snake() {
       move("in");
     }
 
-    if (!is_head_in()) {
+    if (!is_head_in() || snake_locations.hasDuplicates()) {
       // restart game
       console.log("game over");
       init();
