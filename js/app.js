@@ -233,6 +233,32 @@ function animate() {
 }
 animate();
 
+function random_move() {
+  // Move randomly
+
+  const random = Math.floor(Math.random() * 6) + 1;
+  switch (random) {
+    case 1:
+      move("left");
+      break;
+    case 2:
+      move("right");
+      break;
+    case 3:
+      move("up");
+      break;
+    case 4:
+      move("down");
+      break;
+    case 5:
+      move("in");
+      break;
+    case 6:
+      move("out");
+      break;
+  }
+}
+
 function move_snake() {
   setTimeout(function() {
     // Move randomly
@@ -273,6 +299,8 @@ function move_snake() {
     ) {
       move("in");
       last_move = "in";
+    } else {
+      random_move();
     }
 
     if (!is_head_in() || snake_locations.hasDuplicates()) {
