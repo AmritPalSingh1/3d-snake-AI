@@ -28,6 +28,13 @@ class Queue {
     return this.items[this.items.length - 1].slice();
   }
 
+  second_last_item() {
+    if (this.items.length <= 1) {
+      return "No second last item";
+    }
+    return this.items[this.items.length - 2].slice();
+  }
+
   getList() {
     return this.items;
   }

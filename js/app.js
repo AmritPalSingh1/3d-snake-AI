@@ -11,6 +11,7 @@ const speed = 50;
 const snake_locations = new Queue();
 let snake_blocks = [];
 let food_location;
+let last_move = "";
 
 /**
  * Page setup
@@ -239,18 +240,39 @@ function move_snake() {
     // Get food location
     let head = snake_locations.head();
 
-    if (food_location[0] - head[0] > snake_side / 2) {
+    if (food_location[0] - head[0] > snake_side / 2 && last_move != "left") {
       move("right");
-    } else if (food_location[1] - head[1] >= snake_side / 2) {
+      last_move = "right";
+    } else if (
+      food_location[1] - head[1] >= snake_side / 2 &&
+      last_move != "down"
+    ) {
       move("up");
-    } else if (food_location[2] - head[2] >= snake_side / 2) {
+      last_move = "up";
+    } else if (
+      food_location[2] - head[2] >= snake_side / 2 &&
+      last_move != "in"
+    ) {
       move("out");
-    } else if (head[0] - food_location[0] >= snake_side / 2) {
+      last_move = "out";
+    } else if (
+      head[0] - food_location[0] >= snake_side / 2 &&
+      last_move != "right"
+    ) {
       move("left");
-    } else if (head[1] - food_location[1] >= snake_side / 2) {
+      last_move = "left";
+    } else if (
+      head[1] - food_location[1] >= snake_side / 2 &&
+      last_move != "up"
+    ) {
       move("down");
-    } else if (head[2] - food_location[2] >= snake_side / 2) {
+      last_move = "down";
+    } else if (
+      head[2] - food_location[2] >= snake_side / 2 &&
+      last_move != "out"
+    ) {
       move("in");
+      last_move = "in";
     }
 
     if (!is_head_in() || snake_locations.hasDuplicates()) {
